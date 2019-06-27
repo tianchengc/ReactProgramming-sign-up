@@ -5,10 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles } from '@material-ui/core/styles';
 import { Theme, WithStyles, withStyles as styles} from '@material-ui/core';
 import { ThemeProviderProps } from '@material-ui/styles/ThemeProvider';
 import TextField from '@material-ui/core/TextField';
+import RadioGroup  from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
 
 type StyleKeys = 'root' | 'menuButton' | 'title' | 'textField' | 'button' ;
 
@@ -24,7 +26,7 @@ const withStyles = styles<StyleKeys, {}>((theme: Theme) =>
         flexGrow: 1,
     },
     textField: {
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(2),
         marginRight: theme.spacing(1),
         width: 200,
     },
@@ -37,14 +39,16 @@ const withStyles = styles<StyleKeys, {}>((theme: Theme) =>
 export interface FormUserDetailsProps {
     nextStep: () => void;
     prevStep: () => void;
-    handleChange: (input: React.ChangeEvent<HTMLInputElement>) => void 
+    handleChange: (input: React.ChangeEvent<HTMLInputElement>) => void, 
+    handleRadioGroupChange: ((event: React.ChangeEvent<{}>, value: string) => void) | undefined,
     values: any; 
 }
 export interface FormUserDetailsBaseProps extends WithStyles<StyleKeys>, ThemeProviderProps<Theme> {
+    handleChange: (input: React.ChangeEvent<HTMLInputElement>) => void, 
     nextStep: () => void;
-    handleChange: (input: React.ChangeEvent<HTMLInputElement>) => void
     prevStep: () => void;
-    value: any;
+    handleRadioGroupChange: ((event: React.ChangeEvent<{}>, value: string) => void) | undefined,
+    values: any;
     
 }
 export interface FormUserDetailsState {}
@@ -56,6 +60,11 @@ export class FormUserDetailsBase extends React.PureComponent<FormUserDetailsBase
         this.props.nextStep();
     };
 
+    back = ( e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        this.props.prevStep();
+    };
+
     // onInputChanged = (e:React.ChangeEvent<HTMLInputElement> ) => {
     //     const { handleChange } = this.props;
     //     if(handleChange) {
@@ -65,9 +74,9 @@ export class FormUserDetailsBase extends React.PureComponent<FormUserDetailsBase
 
     render() {
         //pull the value out
-        const { classes, theme, values, handleChange} = this.props;
+        const { classes, theme, values, handleChange, handleRadioGroupChange} = this.props;
 
-        return (  
+        return (             
                <React.Fragment>
                 <AppBar position="static" color="inherit" aria-label="Menu" />
                     <Toolbar>
@@ -79,39 +88,79 @@ export class FormUserDetailsBase extends React.PureComponent<FormUserDetailsBase
                         </Typography>
                         <Button color= "inherit" onClick={this.continue}>Login</Button>
                     </Toolbar>
-                    <TextField 
-                        label = "First Name"
-                        margin = "normal"
-                        //onChange= {handleChange}
-                        defaultValue = {values.firstName}
-                        className= {classes.textField}
-                        onChange= {handleChange}
-                    />
                     <br/>
                     <TextField 
-                        label = "Last Name"
+                        label = "Postal Code"
+                        name = "postalCode"
                         margin = "normal"
                         onChange= {handleChange}
-                        defaultValue = {values.lastName}
+                        defaultValue = {values.postalCode}
                         className = {classes.textField}
                     />
                     <br/>
                     <TextField 
-                        label = "Email"
+                        label = "Phone Number"
+                        name = "phoneNumber"
                         margin = "normal"
                         onChange= {handleChange}
-                        defaultValue = {values.Email}
+                        defaultValue = {values.phoneNumber}
                         className = {classes.textField}
                     />
+                    <br/>
+                    {/* <label>
+                    <br/>
+                    <Radio 
+                        value="female"
+                        checked={values.gender === 'female'} 
+                        onChange = {handleChange}
+                        name = "gender"/>Female
+                    </label>
+                    
+                    <label>
+                    <Radio 
+                        value="male" 
+                        checked={values.gender === 'male'} 
+                        onChange = {handleChange}
+                        name = "gender"/>Male
+                    </label>
+                    <label>
+                    <Radio 
+                        value="other"
+                        checked = {values.gender==='other'}
+                        onChange = {handleChange}
+                        name = "gender" />Other
+                    </label> */}
+                    <RadioGroup
+                        name="gender"
+                        value= {values.gender}
+                        onChange={handleRadioGroupChange}>
+                        <label>
+                            <Radio value="female" />Female
+                            </label>
+                            <label>
+                            <Radio value="male" />Male
+                            </label>
+                            <label>
+                            <Radio value="other" />Other
+                        </label>
+                    </RadioGroup>
                     <br/>
                     <Button 
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         onClick = {this.continue}
                         className = {classes.button}
                     >Continue
                     </Button>
+                    <Button 
+                        variant="contained"
+                        color="default"
+                        onClick = {this.back}
+                        className = {classes.button}
+                    >back
+                    </Button>
                 </React.Fragment>
+
         );
     }
 }

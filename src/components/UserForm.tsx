@@ -1,6 +1,12 @@
-import React, { Component } from 'react';
-import FormUserDetails from './FormPersonalDetails';
-import FormPersonalDetails from './FormUserDetails';
+import React, { Component, ComponentState } from 'react';
+// @ts-ignore
+import FormUserDetails from './FormUserDetails.tsx';
+// @ts-ignore
+import FormPersonalDetails from './FormPersonalDetails.tsx';
+// @ts-ignore
+import Confirm from './Confirm.tsx';
+// @ts-ignore
+import Success from './Success.tsx';
 
 export interface UserFormProps {}
 
@@ -13,6 +19,7 @@ export interface UserFormState {
     email:string;
     gender: string;
     postalCode: string;
+    phoneNumber: string;
 }
 
 export class UserForm extends React.PureComponent<
@@ -27,6 +34,7 @@ export class UserForm extends React.PureComponent<
         email:'',
         gender: '',
         postalCode: '',
+        phoneNumber: '',
     };
 
     //proceed to next step
@@ -49,16 +57,22 @@ export class UserForm extends React.PureComponent<
     // handleChange = input => e => {
     //     this.setState({[input]: e.target.value});
     // };
+    handleRadioGroupChange = (event: React.ChangeEvent<{}>, value: string): void =>{
+        this.setState({gender: value});
+    }
 
-    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({firstName: event.target.value});
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        // const value = event.target.value;
+        // const name = event.target.name;
+        const {target: {name, value} } = event;
+        this.setState({[name]: value} as ComponentState);
     }
     
 
     render() {
         const {step} = this.state;
-        const {firstName, lastName, email, gender, postalCode  } = this.state;
-        const values = { firstName, lastName, email, gender, postalCode};
+        const {firstName, lastName, email, gender, postalCode, phoneNumber  } = this.state;
+        const values = { firstName, lastName, email, gender, postalCode, phoneNumber};
         switch (step) {
             case 1: 
                 return (
@@ -66,7 +80,7 @@ export class UserForm extends React.PureComponent<
                         nextStep = {this.nextStep}
                         prevStep = {this.prevStep}
                         handleChange= {this.handleChange}
-                        value = {values}
+                        values = {values}
                     />
                 );
             case 2:
@@ -74,14 +88,23 @@ export class UserForm extends React.PureComponent<
                 <FormPersonalDetails 
                     nextStep = {this.nextStep}
                     prevStep = {this.prevStep}
-                    handleChange = {this.handleChange}
                     values={values}
                 />
                 );
             case 3:
-                return <h1>Confirm</h1>
+                return (
+                    <Confirm
+                        values={values}
+                        prevStep = {this.prevStep}    
+                        nextStep = {this.nextStep}             
+                    />
+                )
             case 4:
-                return <h1>Success</h1>
+                return (
+                    <Success
+                        
+                    />
+                )
             default:
                 return null
         }

@@ -5,12 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import {createStyles } from '@material-ui/core/styles';
 import { Theme, WithStyles, withStyles as styles} from '@material-ui/core';
 import { ThemeProviderProps } from '@material-ui/styles/ThemeProvider';
 import TextField from '@material-ui/core/TextField';
-import RadioButtonGroup from '@material-ui/core/RadioGroup';
-import RadioButton from '@material-ui/core/RadioGroup';
 
 
 type StyleKeys = 'root' | 'menuButton' | 'title' | 'textField' | 'button' ;
@@ -87,13 +85,16 @@ FormPersonalDeState
                     </Toolbar>
                     <TextField 
                         label = "First Name"
+                        name = "firstName"
                         margin = "normal"
                         onChange= {handleChange}
+                        value = {values.firstName}
                         className= {classes.textField}
                     />
                     <br/>
                     <TextField 
                         label = "Last Name"
+                        name = "lastName"
                         margin = "normal"
                         onChange= {handleChange}
                         defaultValue = {values.lastName}
@@ -102,19 +103,16 @@ FormPersonalDeState
                     <br/>
                     <TextField 
                         label = "Email"
+                        name = "email"
                         margin = "normal"
                         onChange= {handleChange}
-                        defaultValue = {values.Email}
+                        defaultValue = {values.email}
                         className = {classes.textField}
                     />
                     <br/>
-                    <RadioButtonGroup>
-                        <RadioButton value="jiohiouhgukj"/>
-    
-                    </RadioButtonGroup>
                     <Button 
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         onClick = {this.continue}
                         className = {classes.button}
                     >Continue
