@@ -40,21 +40,21 @@ export class UserForm extends React.PureComponent<
 > {
     constructor(props: any){
         super(props);
-    this.state = {
-        step: 1,
-        firstName: '',
-        firstNameError:'',
-        lastName: '',
-        lastNameError: '',
-        email:'',
-        emailError: '',
-        gender: '',
-        genderError: '',
-        postalCode: '',
-        postalCodeError: '',
-        phoneNumber: '',
-        phoneNumberError:'',
-    }
+        this.state = {
+            step: 1,
+            firstName: '',
+            firstNameError:'',
+            lastName: '',
+            lastNameError: '',
+            email:'',
+            emailError: '',
+            gender: '',
+            genderError: '',
+            postalCode: '',
+            postalCodeError: '',
+            phoneNumber: '',
+            phoneNumberError:'',
+        }
     };
 
     validate = () => {
@@ -95,8 +95,7 @@ export class UserForm extends React.PureComponent<
     }
 
     //proceed to next step
-    nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+    nextStep = () => {
         const err = this.validate();
         if(!err){
             this.setState({
