@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import { createStyles } from '@material-ui/core/styles';
@@ -120,7 +120,7 @@ ConfirmState
                         color="primary"
                         onClick = {this.continue}
                         className = {classes.button}
-                    >Confirm and Continue
+                    >Confirm & submit
                     </Button>
                     <Button 
                         variant="contained"

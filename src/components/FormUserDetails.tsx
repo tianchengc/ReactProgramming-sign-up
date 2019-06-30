@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -83,6 +83,7 @@ FormPersonalDeState
                         </Typography>
                         <Button color= "inherit" onClick={this.continue}>Login</Button>
                     </Toolbar>
+                    <form>
                     <TextField 
                         label = "First Name"
                         name = "firstName"
@@ -90,6 +91,7 @@ FormPersonalDeState
                         onChange= {handleChange}
                         value = {values.firstName}
                         className= {classes.textField}
+                        helperText = {values.firstNameError}
                     />
                     <br/>
                     <TextField 
@@ -99,6 +101,7 @@ FormPersonalDeState
                         onChange= {handleChange}
                         defaultValue = {values.lastName}
                         className = {classes.textField}
+                        helperText = {values.lastNameError}
                     />
                     <br/>
                     <TextField 
@@ -108,6 +111,7 @@ FormPersonalDeState
                         onChange= {handleChange}
                         defaultValue = {values.email}
                         className = {classes.textField}
+                        helperText = {values.emailError}
                     />
                     <br/>
                     <Button 
@@ -117,6 +121,7 @@ FormPersonalDeState
                         className = {classes.button}
                     >Continue
                     </Button>
+                    </form>
                 </React.Fragment>
         );
     }
